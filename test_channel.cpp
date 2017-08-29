@@ -99,7 +99,7 @@ int main(int argc, char const *argv[])
 	if (command == 2)
 	{
 		// ******************************************************************
-		Serialization_output_Channel the_load_channel(filename)  ;
+		Serialization_input_Channel the_load_channel(filename)  ;
 		// ******************************************************************
 		// load data back
 		// ******************************************************************

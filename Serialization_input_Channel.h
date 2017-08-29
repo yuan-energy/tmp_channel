@@ -24,7 +24,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 #pragma once
-// #include <Channel.h>
 #include <LTensor.h>
 #include <MovableObject.h>
 #include <Vector.h>
@@ -44,64 +43,29 @@
 #include <nDarray.h>
 #include <FEM_ObjectBroker.h>
 #include "Serialization_Channel.h"
-// class ChannelAddress;
 
-// class Serialization_input_Channel: public Channel
 class Serialization_input_Channel: public Serialization_Channel
 {
 public:
 	std::string _filename;
-	// std::ofstream oss ;  
 	std::ifstream iss ; 
-	// cereal::BinaryOutputArchive oarchive;
 	cereal::BinaryInputArchive iarchive;
 
 
 public:
 	Serialization_input_Channel(std::string const& filename);
 	~Serialization_input_Channel();
-	void close();
-	// void set_output_archive(std::string const& filename);
-	// void set_input_archive(std::string const& filename);
+	void close() final;
+	int receive_std_vector(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress* theAddress = 0)  final;
+	int receiveString(int dbTag, int commitTag,  std::string &theString, ChannelAddress* theAddress = 0) final;
+	int receiveDTensor1(int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress* theAddress = 0) final;
+	int receiveDTensor2(int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress* theAddress = 0) final;
+	int receiveDTensor3(int dbTag, int commitTag,  DTensor3 &theTensor, ChannelAddress* theAddress = 0) final;
+	int receiveDTensor4(int dbTag, int commitTag,  DTensor4 &theTensor, ChannelAddress* theAddress = 0) final;
+	int receiveObj(int commitTag,  MovableObject &theObj, FEM_ObjectBroker &theBroker, ChannelAddress* theAddress = 0) final;
+	int receiveVector(int dbTag, int commitTag, Vector& theVector, ChannelAddress* theAddress = 0) final;
+	int receiveID(int dbTag, int commitTag, ID& theID, ChannelAddress* theAddress = 0) final;
+	int receiveMatrix(int dbTag, int commitTag, Matrix& theMatrix, ChannelAddress* theAddress = 0) final;
+	int receiveMsg(int dbTag, int commitTag, Message& theMessage, ChannelAddress* theAddress = 0) final;
 
-	// int send_std_vector(int dbTag, int commitTag, const std::vector<int> & theVector, ChannelAddress* theAddress = 0) ;
-	int receive_std_vector(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress* theAddress = 0) ;
-
-	// int sendString(int dbTag, int commitTag,  const std::string &theString, ChannelAddress* theAddress = 0);
-	int receiveString(int dbTag, int commitTag,  std::string &theString, ChannelAddress* theAddress = 0);
-
-	// int sendDTensor1(int dbTag, int commitTag,  const DTensor1 &theTensor, ChannelAddress* theAddress = 0);
-	int receiveDTensor1(int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress* theAddress = 0);
-
-	// int sendDTensor2(int dbTag, int commitTag,  const DTensor2 &theTensor, ChannelAddress* theAddress = 0);
-	int receiveDTensor2(int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress* theAddress = 0);
-
-	// int sendDTensor3(int dbTag, int commitTag,  const DTensor3 &theTensor, ChannelAddress* theAddress = 0);
-	int receiveDTensor3(int dbTag, int commitTag,  DTensor3 &theTensor, ChannelAddress* theAddress = 0);
-
-	// int sendDTensor4(int dbTag, int commitTag,  const DTensor4 &theTensor, ChannelAddress* theAddress = 0);
-	int receiveDTensor4(int dbTag, int commitTag,  DTensor4 &theTensor, ChannelAddress* theAddress = 0);
-
-	// int sendObj(int commitTag,  MovableObject &theObj, ChannelAddress* theAddress = 0);
-	int receiveObj(int commitTag,  MovableObject &theObj, FEM_ObjectBroker &theBroker, ChannelAddress* theAddress = 0);
-
-	// int sendVector(int dbTag, int commitTag, const Vector& theVector, ChannelAddress* theAddress = 0);
-	int receiveVector(int dbTag, int commitTag, Vector& theVector, ChannelAddress* theAddress = 0);
-
-	// int sendID(int dbTag, int commitTag, const ID& theID, ChannelAddress* theAddress = 0);
-	int receiveID(int dbTag, int commitTag, ID& theID, ChannelAddress* theAddress = 0);
-
-	// int sendMatrix(int dbTag, int commitTag, const Matrix& theMatrix, ChannelAddress* theAddress = 0);
-	int receiveMatrix(int dbTag, int commitTag, Matrix& theMatrix, ChannelAddress* theAddress = 0);
-
-	// int sendMsg(int dbTag, int commitTag, const Message& theMessage, ChannelAddress* theAddress = 0);
-	int receiveMsg(int dbTag, int commitTag, Message& theMessage, ChannelAddress* theAddress = 0);
-
-	// int sendnDarray(int dbTag, int commitTag, const nDarray &theNDarray, ChannelAddress* theAddress = 0);
-	// int receivenDarray(int dbTag, int commitTag, nDarray &theNDarray, ChannelAddress* theAddress = 0);
-
-	// char* addToProgram();
-	// int setUpConnection();
-	// // ChannelAddress* getLastSendersAddress();
-	// int setNextAddress(const ChannelAddress& otherChannelAddress);
 };

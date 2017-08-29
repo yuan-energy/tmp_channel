@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 //
 // COPYRIGHT (C):      Version of a Creative Commons License,
 //                     for details contact Boris Jeremic, jeremic@ucdavis.edu
@@ -26,17 +26,13 @@
 
 #include "Serialization_output_Channel.h"
 
-
-
 Serialization_output_Channel
 ::Serialization_output_Channel
 (std::string const& filename)
 :
 _filename(filename)
 ,oss(filename, std::ios::binary)
-// ,iss(filename, std::ios::binary)
 ,oarchive(oss)
-// ,iarchive(iss)
 {
 }
 
@@ -51,33 +47,8 @@ Serialization_output_Channel
 ::close
 (){
 	oss.close();
-	// iss.close();
 	std::cerr<<" --> Serialization_output_Channel is closed!"<<std::endl;
 }
-
-// void
-// Serialization_output_Channel
-// ::set_output_archive
-// (std::string const& filename){
-// 	_filename = filename;
-// 	oss = std::ofstream(filename, std::ios::binary);
-// 	oarchive = cereal::BinaryOutputArchive( oss );
-// }
-
-// void
-// Serialization_output_Channel
-// ::set_input_archive
-// (std::string const& filename){
-// 	_filename = filename;
-// 	iss = std::ifstream(filename, std::ios::binary);
-// 	iarchive = cereal::BinaryInputArchive( iss );
-// }
-
-// std::string _filename;
-// std::ofstream oss ;  
-// std::ifstream iss ; 
-// cereal::BinaryOutputArchive oarchive;
-// cereal::BinaryInputArchive iarchive;
 
 int 
 Serialization_output_Channel
@@ -87,15 +58,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-// int 
-// Serialization_output_Channel
-// ::receive_std_vector
-// (int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress *theAddress){
-// 	iarchive(theVector);
-// 	return 0;
-// }
-
-
 int 
 Serialization_output_Channel
 ::sendString
@@ -103,15 +65,6 @@ Serialization_output_Channel
 	oarchive(theString);
 	return 0;
 }
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveString
-// (int dbTag, int commitTag,  std::string &theString, ChannelAddress *theAddress){
-// 	iarchive(theString);
-// 	return 0;
-// }
 
 int 
 Serialization_output_Channel
@@ -124,18 +77,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-// int 
-// Serialization_output_Channel
-// ::receiveDTensor1
-// (int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress *theAddress){
-// 	iarchive(theTensor.dataCount);
-// 	for (int i = 0; i < 1; ++i){iarchive(theTensor.size[i]);}
-// 	for (int i = 0; i < 1; ++i){iarchive(theTensor.stride[i]);}
-// 	theTensor.data = new double[theTensor.dataCount];
-// 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
-// 	return 0;
-// }
-
 int 
 Serialization_output_Channel
 ::sendDTensor2
@@ -146,21 +87,6 @@ Serialization_output_Channel
 	for (int i = 0; i < theTensor.dataCount; ++i){oarchive( *(theTensor.data + i) );}
 	return 0;
 }
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveDTensor2
-// (int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress *theAddress){
-// 	iarchive(theTensor.dataCount);
-// 	for (int i = 0; i < 2; ++i){iarchive(theTensor.size[i]);}
-// 	for (int i = 0; i < 2; ++i){iarchive(theTensor.stride[i]);}
-// 	theTensor.data = new double[theTensor.dataCount];
-// 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
-// 	return 0;
-// }
-
-
 
 int 
 Serialization_output_Channel
@@ -173,21 +99,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-
-// int 
-// Serialization_output_Channel
-// ::receiveDTensor3
-// (int dbTag, int commitTag,  DTensor3 &theTensor, ChannelAddress *theAddress){
-// 	iarchive(theTensor.dataCount);
-// 	for (int i = 0; i < 3; ++i){iarchive(theTensor.size[i]);}
-// 	for (int i = 0; i < 3; ++i){iarchive(theTensor.stride[i]);}
-// 	theTensor.data = new double[theTensor.dataCount];
-// 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
-// 	return 0;
-// }
-
-
-
 int 
 Serialization_output_Channel
 ::sendDTensor4
@@ -199,22 +110,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-
-// int 
-// Serialization_output_Channel
-// ::receiveDTensor4
-// (int dbTag, int commitTag,  DTensor4 &theTensor, ChannelAddress *theAddress){
-// 	iarchive(theTensor.dataCount);
-// 	for (int i = 0; i < 4; ++i){iarchive(theTensor.size[i]);}
-// 	for (int i = 0; i < 4; ++i){iarchive(theTensor.stride[i]);}
-// 	theTensor.data = new double[theTensor.dataCount];
-// 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
-// 	return 0;
-// }
-
-
-
-
 int 
 Serialization_output_Channel
 ::sendObj
@@ -222,19 +117,6 @@ Serialization_output_Channel
 	oarchive(theObj);
 	return 0;
 }
-
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveObj
-// (int commitTag,  MovableObject &theObj, FEM_ObjectBroker &theBroker, ChannelAddress *theAddress){
-// 	iarchive(theObj);
-// 	return 0;
-// }
-
-
-
 
 int 
 Serialization_output_Channel
@@ -244,17 +126,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveVector
-// (int dbTag, int commitTag,  Vector &theVector, ChannelAddress *theAddress){
-// 	iarchive(theVector);
-// 	return 0;
-// }
-
-
 int 
 Serialization_output_Channel
 ::sendID
@@ -262,19 +133,6 @@ Serialization_output_Channel
 	oarchive(theID);
 	return 0;
 }
-
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveID
-// (int dbTag, int commitTag,  ID &theID, ChannelAddress *theAddress){
-// 	iarchive(theID);
-// 	return 0;
-// }
-
-
-
 
 int 
 Serialization_output_Channel
@@ -284,18 +142,6 @@ Serialization_output_Channel
 	return 0;
 }
 
-
-
-// int 
-// Serialization_output_Channel
-// ::receiveMatrix
-// (int dbTag, int commitTag,  Matrix &theMatrix, ChannelAddress *theAddress){
-// 	iarchive(theMatrix);
-// 	return 0;
-// }
-
-
-
 int 
 Serialization_output_Channel
 ::sendMsg
@@ -304,19 +150,3 @@ Serialization_output_Channel
 	oarchive(tmp);
 	return 0;
 }
-
-// int 
-// Serialization_output_Channel
-// ::receiveMsg
-// (int dbTag, int commitTag,  Message &theMessage, ChannelAddress *theAddress){
-// 	std::string tmp;
-// 	iarchive(tmp);
-// 	theMessage.setData(tmp.c_str(), tmp.size());
-
-// 	string channel_msg(theMessage.getData(), theMessage.getSize());
-// 	std::cout<<"channel_msg is: " ;
-// 	std::cout<< channel_msg <<"\n";
-
-// 	return 0;
-// }
-
