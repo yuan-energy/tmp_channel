@@ -1,3 +1,4 @@
+#pragma once
 class FEM_ObjectBroker
 {
 public:
