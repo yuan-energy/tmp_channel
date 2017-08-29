@@ -36,7 +36,7 @@
 #include "Matrix.h"
 #include "Vector.h"
 #include "ID.h"
-#include <Tensor.h>
+// #include <Tensor.h>
 
 #include <stdlib.h>
 
@@ -124,7 +124,7 @@ Matrix::Matrix(int nRows, int nCols)
         if (data == 0)
         {
             std::cerr << "WARNING:Matrix::Matrix(int,int): Ran out of memory on init ";
-            std::cerr << "of size " << dataSize << endln;
+            std::cerr << "of size " << dataSize << endl;
             numRows = 0;
             numCols = 0;
             dataSize = 0;
@@ -213,7 +213,7 @@ Matrix::Matrix(const Matrix &other)
         if (data == 0)
         {
             std::cerr << "WARNING:Matrix::Matrix(Matrix &): ";
-            std::cerr << "Ran out of memory on init of size " << dataSize << endln;
+            std::cerr << "Ran out of memory on init of size " << dataSize << endl;
             numRows = 0;
             numCols = 0;
             dataSize = 0;
@@ -406,134 +406,134 @@ Matrix::Assemble(const Matrix &V, const ID &rows, const ID &cols, double fact)
     return res;
 }
 
-#ifdef _WIN32
-extern "C" int  DGESV(int *N, int *NRHS, double *A, int *LDA,
-                      int *iPiv, double *B, int *LDB, int *INFO);
+// #ifdef _WIN32
+// extern "C" int  DGESV(int *N, int *NRHS, double *A, int *LDA,
+//                       int *iPiv, double *B, int *LDB, int *INFO);
 
-extern "C" int  DGETRF(int *M, int *N, double *A, int *LDA,
-                       int *iPiv, int *INFO);
+// extern "C" int  DGETRF(int *M, int *N, double *A, int *LDA,
+//                        int *iPiv, int *INFO);
 
-extern "C" int  DGETRS(char *TRANS, unsigned int sizeT,
-                       int *N, int *NRHS, double *A, int *LDA,
-                       int *iPiv, double *B, int *LDB, int *INFO);
+// extern "C" int  DGETRS(char *TRANS, unsigned int sizeT,
+//                        int *N, int *NRHS, double *A, int *LDA,
+//                        int *iPiv, double *B, int *LDB, int *INFO);
 
-extern "C" int  DGETRI(int *N, double *A, int *LDA,
-                       int *iPiv, double *Work, int *WORKL, int *INFO);
+// extern "C" int  DGETRI(int *N, double *A, int *LDA,
+//                        int *iPiv, double *Work, int *WORKL, int *INFO);
 
-#else
-extern "C" int dgesv_(int *N, int *NRHS, double *A, int *LDA, int *iPiv,
-                      double *B, int *LDB, int *INFO);
+// #else
+// extern "C" int dgesv_(int *N, int *NRHS, double *A, int *LDA, int *iPiv,
+//                       double *B, int *LDB, int *INFO);
 
-extern "C" int dgetrs_(char *TRANS, int *N, int *NRHS, double *A, int *LDA,
-                       int *iPiv, double *B, int *LDB, int *INFO);
+// extern "C" int dgetrs_(char *TRANS, int *N, int *NRHS, double *A, int *LDA,
+//                        int *iPiv, double *B, int *LDB, int *INFO);
 
-extern "C" int dgetrf_(int *M, int *N, double *A, int *LDA,
-                       int *iPiv, int *INFO);
+// extern "C" int dgetrf_(int *M, int *N, double *A, int *LDA,
+//                        int *iPiv, int *INFO);
 
-extern "C" int dgetri_(int *N, double *A, int *LDA,
-                       int *iPiv, double *Work, int *WORKL, int *INFO);
-extern "C" int dgerfs_(char *TRANS, int *N, int *NRHS, double *A, int *LDA,
-                       double *AF, int *LDAF, int *iPiv, double *B, int *LDB,
-                       double *X, int *LDX, double *FERR, double *BERR,
-                       double *WORK, int *IWORK, int *INFO);
+// extern "C" int dgetri_(int *N, double *A, int *LDA,
+//                        int *iPiv, double *Work, int *WORKL, int *INFO);
+// extern "C" int dgerfs_(char *TRANS, int *N, int *NRHS, double *A, int *LDA,
+//                        double *AF, int *LDAF, int *iPiv, double *B, int *LDB,
+//                        double *X, int *LDX, double *FERR, double *BERR,
+//                        double *WORK, int *IWORK, int *INFO);
 
-#endif
+// #endif
 
 int
 Matrix::Solve(const Vector &b, Vector &x) const
 {
 
-    int n = numRows;
+//     int n = numRows;
 
-#ifdef _G3DEBUG
+// #ifdef _G3DEBUG
 
-    if (numRows != numCols)
-    {
-        std::cerr << "Matrix::Solve(b,x) - the matrix of dimensions "
-                  << numRows << ", " << numCols << " is not square " << endln;
-        return -1;
-    }
+//     if (numRows != numCols)
+//     {
+//         std::cerr << "Matrix::Solve(b,x) - the matrix of dimensions "
+//                   << numRows << ", " << numCols << " is not square " << endl;
+//         return -1;
+//     }
 
-    if (n != x.Size())
-    {
-        std::cerr << "Matrix::Solve(b,x) - dimension of x, " << numRows << "is not same as matrix " <<  x.Size() << endln;
-        return -2;
-    }
+//     if (n != x.Size())
+//     {
+//         std::cerr << "Matrix::Solve(b,x) - dimension of x, " << numRows << "is not same as matrix " <<  x.Size() << endl;
+//         return -2;
+//     }
 
-    if (n != b.Size())
-    {
-        std::cerr << "Matrix::Solve(b,x) - dimension of x, " << numRows << "is not same as matrix " <<  b.Size() << endln;
-        return -2;
-    }
+//     if (n != b.Size())
+//     {
+//         std::cerr << "Matrix::Solve(b,x) - dimension of x, " << numRows << "is not same as matrix " <<  b.Size() << endl;
+//         return -2;
+//     }
 
-#endif
+// #endif
 
-    // check work area can hold all the data
-    if (dataSize > sizeDoubleWork)
-    {
+//     // check work area can hold all the data
+//     if (dataSize > sizeDoubleWork)
+//     {
 
-        if (matrixWork != 0)
-        {
-            delete [] matrixWork;
-        }
+//         if (matrixWork != 0)
+//         {
+//             delete [] matrixWork;
+//         }
 
-        matrixWork = new double[dataSize];
-        sizeDoubleWork = dataSize;
+//         matrixWork = new double[dataSize];
+//         sizeDoubleWork = dataSize;
 
-        if (matrixWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeDoubleWork = 0;
-            return -3;
-        }
-    }
+//         if (matrixWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeDoubleWork = 0;
+//             return -3;
+//         }
+//     }
 
-    // check work area can hold all the data
-    if (n > sizeIntWork)
-    {
+//     // check work area can hold all the data
+//     if (n > sizeIntWork)
+//     {
 
-        if (intWork != 0)
-        {
-            delete [] intWork;
-        }
+//         if (intWork != 0)
+//         {
+//             delete [] intWork;
+//         }
 
-        intWork = new int[n];
-        sizeIntWork = n;
+//         intWork = new int[n];
+//         sizeIntWork = n;
 
-        if (intWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeIntWork = 0;
-            return -3;
-        }
-    }
-
-
-    // copy the data
-    int i;
-
-    for (i = 0; i < dataSize; i++)
-    {
-        matrixWork[i] = data[i];
-    }
-
-    // set x equal to b
-    x = b;
-
-    int nrhs = 1;
-    int ldA = n;
-    int ldB = n;
-    int info;
-    double *Aptr = matrixWork;
-    double *Xptr = x.theData;
-    int *iPIV = intWork;
+//         if (intWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeIntWork = 0;
+//             return -3;
+//         }
+//     }
 
 
-#ifdef _WIN32
-    DGESV(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
-#else
-    dgesv_(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
-#endif
+//     // copy the data
+//     int i;
+
+//     for (i = 0; i < dataSize; i++)
+//     {
+//         matrixWork[i] = data[i];
+//     }
+
+//     // set x equal to b
+//     x = b;
+
+//     int nrhs = 1;
+//     int ldA = n;
+//     int ldB = n;
+//     int info;
+//     double *Aptr = matrixWork;
+//     double *Xptr = x.theData;
+//     int *iPIV = intWork;
+
+
+// // #ifdef _WIN32
+// //     DGESV(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
+// // #else
+// //     dgesv_(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
+// // #endif
 
 
 
@@ -545,225 +545,226 @@ int
 Matrix::Solve(const Matrix &b, Matrix &x) const
 {
 
-    int n = numRows;
-    int nrhs = x.numCols;
+//     int n = numRows;
+//     int nrhs = x.numCols;
 
-#ifdef _G3DEBUG
+// #ifdef _G3DEBUG
 
-    if (numRows != numCols)
-    {
-        std::cerr << "Matrix::Solve(B,X) - the matrix of dimensions [" << numRows << " " <<  numCols << "] is not square\n";
-        return -1;
-    }
+//     if (numRows != numCols)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - the matrix of dimensions [" << numRows << " " <<  numCols << "] is not square\n";
+//         return -1;
+//     }
 
-    if (n != x.numRows)
-    {
-        std::cerr << "Matrix::Solve(B,X) - #rows of X, " << x.numRows << " is not same as the matrices: " << numRows << endln;
-        return -2;
-    }
+//     if (n != x.numRows)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - #rows of X, " << x.numRows << " is not same as the matrices: " << numRows << endl;
+//         return -2;
+//     }
 
-    if (n != b.numRows)
-    {
-        std::cerr << "Matrix::Solve(B,X) - #rows of B, " << b.numRows << " is not same as the matrices: " << numRows << endln;
-        return -2;
-    }
+//     if (n != b.numRows)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - #rows of B, " << b.numRows << " is not same as the matrices: " << numRows << endl;
+//         return -2;
+//     }
 
-    if (x.numCols != b.numCols)
-    {
-        std::cerr << "Matrix::Solve(B,X) - #cols of B, " << b.numCols << " , is not same as that of X, b " <<  x.numCols << endln;
-        return -3;
-    }
+//     if (x.numCols != b.numCols)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - #cols of B, " << b.numCols << " , is not same as that of X, b " <<  x.numCols << endl;
+//         return -3;
+//     }
 
-#endif
+// #endif
 
-    // check work area can hold all the data
-    if (dataSize > sizeDoubleWork)
-    {
+//     // check work area can hold all the data
+//     if (dataSize > sizeDoubleWork)
+//     {
 
-        if (matrixWork != 0)
-        {
-            delete [] matrixWork;
-        }
+//         if (matrixWork != 0)
+//         {
+//             delete [] matrixWork;
+//         }
 
-        matrixWork = new double[dataSize];
-        sizeDoubleWork = dataSize;
+//         matrixWork = new double[dataSize];
+//         sizeDoubleWork = dataSize;
 
-        if (matrixWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeDoubleWork = 0;
-            return -3;
-        }
-    }
+//         if (matrixWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeDoubleWork = 0;
+//             return -3;
+//         }
+//     }
 
-    // check work area can hold all the data
-    if (n > sizeIntWork)
-    {
+//     // check work area can hold all the data
+//     if (n > sizeIntWork)
+//     {
 
-        if (intWork != 0)
-        {
-            delete [] intWork;
-        }
+//         if (intWork != 0)
+//         {
+//             delete [] intWork;
+//         }
 
-        intWork = new int[n];
-        sizeIntWork = n;
+//         intWork = new int[n];
+//         sizeIntWork = n;
 
-        if (intWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeIntWork = 0;
-            return -3;
-        }
-    }
+//         if (intWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeIntWork = 0;
+//             return -3;
+//         }
+//     }
 
-    x = b;
+//     x = b;
 
-    // copy the data
-    int i;
+//     // copy the data
+//     int i;
 
-    for (i = 0; i < dataSize; i++)
-    {
-        matrixWork[i] = data[i];
-    }
-
-
-    int ldA = n;
-    int ldB = n;
-    int info;
-    double *Aptr = matrixWork;
-    double *Xptr = x.data;
-
-    int *iPIV = intWork;
+//     for (i = 0; i < dataSize; i++)
+//     {
+//         matrixWork[i] = data[i];
+//     }
 
 
-#ifdef _WIN32
-    DGESV(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
-#else
-    dgesv_(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
+//     int ldA = n;
+//     int ldB = n;
+//     int info;
+//     double *Aptr = matrixWork;
+//     double *Xptr = x.data;
 
-    /*
-    // further correction if required
-    double Bptr[n*n];
-    for (int i=0; i<n*n; i++) Bptr[i] = b.data[i];
-    double *origData = data;
-    double Ferr[n];
-    double Berr[n];
-    double newWork[3*n];
-    int newIwork[n];
+//     int *iPIV = intWork;
 
-    dgerfs_("N",&n,&n,origData,&ldA,Aptr,&n,iPIV,Bptr,&ldB,Xptr,&ldB,
-        Ferr, Berr, newWork, newIwork, &info);
-    */
-#endif
 
-    return info;
+// // #ifdef _WIN32
+// //     DGESV(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
+// // #else
+// //     dgesv_(&n, &nrhs, Aptr, &ldA, iPIV, Xptr, &ldB, &info);
+
+//     /*
+//     // further correction if required
+//     double Bptr[n*n];
+//     for (int i=0; i<n*n; i++) Bptr[i] = b.data[i];
+//     double *origData = data;
+//     double Ferr[n];
+//     double Berr[n];
+//     double newWork[3*n];
+//     int newIwork[n];
+
+//     dgerfs_("N",&n,&n,origData,&ldA,Aptr,&n,iPIV,Bptr,&ldB,Xptr,&ldB,
+//         Ferr, Berr, newWork, newIwork, &info);
+//     */
+// // #endif
+
+//     return info;
+    return 0;
 }
 
 
-int
-Matrix::Invert(Matrix &theInverse) const
-{
+// int
+// Matrix::Invert(Matrix &theInverse) const
+// {
 
-    int n = numRows;
-    // int nrhs = theInverse.numCols;
+//     int n = numRows;
+//     // int nrhs = theInverse.numCols;
 
-#ifdef _G3DEBUG
+// #ifdef _G3DEBUG
 
-    if (numRows != numCols)
-    {
-        std::cerr << "Matrix::Solve(B,X) - the matrix of dimensions [" << numRows << "," << numCols << "] is not square\n";
-        return -1;
-    }
+//     if (numRows != numCols)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - the matrix of dimensions [" << numRows << "," << numCols << "] is not square\n";
+//         return -1;
+//     }
 
-    if (n != theInverse.numRows)
-    {
-        std::cerr << "Matrix::Solve(B,X) - #rows of X, " << numRows << ", is not same as matrix " << theInverse.numRows << endln;
-        return -2;
-    }
+//     if (n != theInverse.numRows)
+//     {
+//         std::cerr << "Matrix::Solve(B,X) - #rows of X, " << numRows << ", is not same as matrix " << theInverse.numRows << endl;
+//         return -2;
+//     }
 
-#endif
+// #endif
 
-    // check work area can hold all the data
-    if (dataSize > sizeDoubleWork)
-    {
+//     // check work area can hold all the data
+//     if (dataSize > sizeDoubleWork)
+//     {
 
-        if (matrixWork != 0)
-        {
-            delete [] matrixWork;
-        }
+//         if (matrixWork != 0)
+//         {
+//             delete [] matrixWork;
+//         }
 
-        matrixWork = new double[dataSize];
-        sizeDoubleWork = dataSize;
+//         matrixWork = new double[dataSize];
+//         sizeDoubleWork = dataSize;
 
-        if (matrixWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeDoubleWork = 0;
-            return -3;
-        }
-    }
+//         if (matrixWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeDoubleWork = 0;
+//             return -3;
+//         }
+//     }
 
-    // check work area can hold all the data
-    if (n > sizeIntWork)
-    {
+//     // check work area can hold all the data
+//     if (n > sizeIntWork)
+//     {
 
-        if (intWork != 0)
-        {
-            delete [] intWork;
-        }
+//         if (intWork != 0)
+//         {
+//             delete [] intWork;
+//         }
 
-        intWork = new int[n];
-        sizeIntWork = n;
+//         intWork = new int[n];
+//         sizeIntWork = n;
 
-        if (intWork == 0)
-        {
-            std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
-            sizeIntWork = 0;
-            return -3;
-        }
-    }
+//         if (intWork == 0)
+//         {
+//             std::cerr << "WARNING: Matrix::Solve() - out of memory creating work area's\n";
+//             sizeIntWork = 0;
+//             return -3;
+//         }
+//     }
 
-    // copy the data
-    theInverse = *this;
+//     // copy the data
+//     theInverse = *this;
 
-    for (int i = 0; i < dataSize; i++)
-    {
-        matrixWork[i] = data[i];
-    }
+//     for (int i = 0; i < dataSize; i++)
+//     {
+//         matrixWork[i] = data[i];
+//     }
 
-    int ldA = n;
-    // int ldB = n;
-    int info;
-    double *Wptr = matrixWork;
-    double *Aptr = theInverse.data;
-    int workSize = sizeDoubleWork;
+//     int ldA = n;
+//     // int ldB = n;
+//     int info;
+//     double *Wptr = matrixWork;
+//     double *Aptr = theInverse.data;
+//     int workSize = sizeDoubleWork;
 
-    int *iPIV = intWork;
+//     int *iPIV = intWork;
 
 
-#ifdef _WIN32
-    DGETRF(&n, &n, Aptr, &ldA, iPIV, &info);
+// // #ifdef _WIN32
+// //     DGETRF(&n, &n, Aptr, &ldA, iPIV, &info);
 
-    if (info != 0)
-    {
-        return info;
-    }
+// //     if (info != 0)
+// //     {
+// //         return info;
+// //     }
 
-    DGETRI(&n, Aptr, &ldA, iPIV, Wptr, &workSize, &info);
-#else
-    dgetrf_(&n, &n, Aptr, &ldA, iPIV, &info);
+// //     DGETRI(&n, Aptr, &ldA, iPIV, Wptr, &workSize, &info);
+// // #else
+// //     dgetrf_(&n, &n, Aptr, &ldA, iPIV, &info);
 
-    if (info != 0)
-    {
-        return info;
-    }
+// //     if (info != 0)
+// //     {
+// //         return info;
+// //     }
 
-    dgetri_(&n, Aptr, &ldA, iPIV, Wptr, &workSize, &info);
+// //     dgetri_(&n, Aptr, &ldA, iPIV, Wptr, &workSize, &info);
 
-#endif
+// // #endif
 
-    return info;
-}
+//     return info;
+// }
 
 
 
@@ -1215,118 +1216,118 @@ Matrix::operator=(const Matrix &other)
 
 
 
-Matrix &
-Matrix::operator=(const Tensor &V)
-{
-    int rank = V.rank();
+// Matrix &
+// Matrix::operator=(const Tensor &V)
+// {
+//     int rank = V.rank();
 
-    if (rank != 4)
-    {
-        std::cerr << "Matrix::operator=() - tensor must be of rank 4\n";
-        return *this;
-    }
+//     if (rank != 4)
+//     {
+//         std::cerr << "Matrix::operator=() - tensor must be of rank 4\n";
+//         return *this;
+//     }
 
-    int dim = V.dim(1);
+//     int dim = V.dim(1);
 
-    if (dim != (V.dim(2) != (V.dim(3) != V.dim(4))))
-    {
-        std::cerr << "Matrix::operator=() - tensor must have square dimensions\n";
-        return *this;
-    }
+//     if (dim != (V.dim(2) != (V.dim(3) != V.dim(4))))
+//     {
+//         std::cerr << "Matrix::operator=() - tensor must have square dimensions\n";
+//         return *this;
+//     }
 
-    if (dim != 2 || dim != 3 || dim != 1)
-    {
-        std::cerr << "Matrix::operator=() - tensor must be of dimension 2 or 3\n";
-        return *this;
-    }
+//     if (dim != 2 || dim != 3 || dim != 1)
+//     {
+//         std::cerr << "Matrix::operator=() - tensor must be of dimension 2 or 3\n";
+//         return *this;
+//     }
 
-    if (dim == 1)
-    {
-        if ((numCols != 1) || (numRows != 1))
-        {
-            std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
-            return *this;
-        }
+//     if (dim == 1)
+//     {
+//         if ((numCols != 1) || (numRows != 1))
+//         {
+//             std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
+//             return *this;
+//         }
 
-        (*this)(0, 0) = V.cval(1, 1, 1, 1);
+//         (*this)(0, 0) = V.cval(1, 1, 1, 1);
 
-    }
-    else if (dim == 2)
-    {
-        if ((numCols != 3) || (numRows != 3))
-        {
-            std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
+//     }
+//     else if (dim == 2)
+//     {
+//         if ((numCols != 3) || (numRows != 3))
+//         {
+//             std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
 
-            return *this;
-        }
+//             return *this;
+//         }
 
-        (*this)(0, 0) = V.cval(1, 1, 1, 1);
-        (*this)(0, 1) = V.cval(1, 1, 2, 2);
-        (*this)(0, 2) = V.cval(1, 1, 1, 2);
+//         (*this)(0, 0) = V.cval(1, 1, 1, 1);
+//         (*this)(0, 1) = V.cval(1, 1, 2, 2);
+//         (*this)(0, 2) = V.cval(1, 1, 1, 2);
 
-        (*this)(1, 0) = V.cval(2, 2, 1, 1);
-        (*this)(1, 1) = V.cval(2, 2, 2, 2);
-        (*this)(1, 2) = V.cval(2, 2, 1, 2);
+//         (*this)(1, 0) = V.cval(2, 2, 1, 1);
+//         (*this)(1, 1) = V.cval(2, 2, 2, 2);
+//         (*this)(1, 2) = V.cval(2, 2, 1, 2);
 
-        (*this)(2, 0) = V.cval(1, 2, 1, 1);
-        (*this)(2, 1) = V.cval(1, 2, 2, 2);
-        (*this)(2, 2) = V.cval(1, 2, 1, 2);
+//         (*this)(2, 0) = V.cval(1, 2, 1, 1);
+//         (*this)(2, 1) = V.cval(1, 2, 2, 2);
+//         (*this)(2, 2) = V.cval(1, 2, 1, 2);
 
-    }
-    else
-    {
-        if ((numCols != 6) || (numRows != 6))
-        {
-            std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
+//     }
+//     else
+//     {
+//         if ((numCols != 6) || (numRows != 6))
+//         {
+//             std::cerr << "Matrix::operator=() - matrix must be 1x1 for tensor of dimension 3\n";
 
-            return *this;
-        }
+//             return *this;
+//         }
 
-        (*this)(0, 0) = V.cval(1, 1, 1, 1);
-        (*this)(0, 1) = V.cval(1, 1, 2, 2);
-        (*this)(0, 2) = V.cval(1, 1, 3, 3);
-        (*this)(0, 3) = V.cval(1, 1, 1, 2);
-        (*this)(0, 4) = V.cval(1, 1, 1, 3);
-        (*this)(0, 5) = V.cval(1, 1, 2, 3);
+//         (*this)(0, 0) = V.cval(1, 1, 1, 1);
+//         (*this)(0, 1) = V.cval(1, 1, 2, 2);
+//         (*this)(0, 2) = V.cval(1, 1, 3, 3);
+//         (*this)(0, 3) = V.cval(1, 1, 1, 2);
+//         (*this)(0, 4) = V.cval(1, 1, 1, 3);
+//         (*this)(0, 5) = V.cval(1, 1, 2, 3);
 
-        (*this)(1, 0) = V.cval(2, 2, 1, 1);
-        (*this)(1, 1) = V.cval(2, 2, 2, 2);
-        (*this)(1, 2) = V.cval(2, 2, 3, 3);
-        (*this)(1, 3) = V.cval(2, 2, 1, 2);
-        (*this)(1, 4) = V.cval(2, 2, 1, 3);
-        (*this)(1, 5) = V.cval(2, 2, 2, 3);
+//         (*this)(1, 0) = V.cval(2, 2, 1, 1);
+//         (*this)(1, 1) = V.cval(2, 2, 2, 2);
+//         (*this)(1, 2) = V.cval(2, 2, 3, 3);
+//         (*this)(1, 3) = V.cval(2, 2, 1, 2);
+//         (*this)(1, 4) = V.cval(2, 2, 1, 3);
+//         (*this)(1, 5) = V.cval(2, 2, 2, 3);
 
-        (*this)(2, 0) = V.cval(3, 3, 1, 1);
-        (*this)(2, 1) = V.cval(3, 3, 2, 2);
-        (*this)(2, 2) = V.cval(3, 3, 3, 3);
-        (*this)(2, 3) = V.cval(3, 3, 1, 2);
-        (*this)(2, 4) = V.cval(3, 3, 1, 3);
-        (*this)(2, 5) = V.cval(3, 3, 2, 3);
+//         (*this)(2, 0) = V.cval(3, 3, 1, 1);
+//         (*this)(2, 1) = V.cval(3, 3, 2, 2);
+//         (*this)(2, 2) = V.cval(3, 3, 3, 3);
+//         (*this)(2, 3) = V.cval(3, 3, 1, 2);
+//         (*this)(2, 4) = V.cval(3, 3, 1, 3);
+//         (*this)(2, 5) = V.cval(3, 3, 2, 3);
 
-        (*this)(3, 0) = V.cval(1, 2, 1, 1);
-        (*this)(3, 1) = V.cval(1, 2, 2, 2);
-        (*this)(3, 2) = V.cval(1, 2, 3, 3);
-        (*this)(3, 3) = V.cval(1, 2, 1, 2);
-        (*this)(3, 4) = V.cval(1, 2, 1, 3);
-        (*this)(3, 5) = V.cval(1, 2, 2, 3);
+//         (*this)(3, 0) = V.cval(1, 2, 1, 1);
+//         (*this)(3, 1) = V.cval(1, 2, 2, 2);
+//         (*this)(3, 2) = V.cval(1, 2, 3, 3);
+//         (*this)(3, 3) = V.cval(1, 2, 1, 2);
+//         (*this)(3, 4) = V.cval(1, 2, 1, 3);
+//         (*this)(3, 5) = V.cval(1, 2, 2, 3);
 
-        (*this)(4, 0) = V.cval(1, 3, 1, 1);
-        (*this)(4, 1) = V.cval(1, 3, 2, 2);
-        (*this)(4, 2) = V.cval(1, 3, 3, 3);
-        (*this)(4, 3) = V.cval(1, 3, 1, 2);
-        (*this)(4, 4) = V.cval(1, 3, 1, 3);
-        (*this)(4, 5) = V.cval(1, 3, 2, 3);
+//         (*this)(4, 0) = V.cval(1, 3, 1, 1);
+//         (*this)(4, 1) = V.cval(1, 3, 2, 2);
+//         (*this)(4, 2) = V.cval(1, 3, 3, 3);
+//         (*this)(4, 3) = V.cval(1, 3, 1, 2);
+//         (*this)(4, 4) = V.cval(1, 3, 1, 3);
+//         (*this)(4, 5) = V.cval(1, 3, 2, 3);
 
-        (*this)(5, 0) = V.cval(2, 3, 1, 1);
-        (*this)(5, 1) = V.cval(2, 3, 2, 2);
-        (*this)(5, 2) = V.cval(2, 3, 3, 3);
-        (*this)(5, 3) = V.cval(2, 3, 1, 2);
-        (*this)(5, 4) = V.cval(2, 3, 1, 3);
-        (*this)(5, 5) = V.cval(2, 3, 2, 3);
-    }
+//         (*this)(5, 0) = V.cval(2, 3, 1, 1);
+//         (*this)(5, 1) = V.cval(2, 3, 2, 2);
+//         (*this)(5, 2) = V.cval(2, 3, 3, 3);
+//         (*this)(5, 3) = V.cval(2, 3, 1, 2);
+//         (*this)(5, 4) = V.cval(2, 3, 1, 3);
+//         (*this)(5, 5) = V.cval(2, 3, 2, 3);
+//     }
 
-    return *this;
-}
+//     return *this;
+// }
 
 
 // virtual Matrix &operator+=(double fact);
@@ -1423,7 +1424,7 @@ Matrix::operator/=(double fact)
     {
         // print out the warining message
         std::cerr << "WARNING:Matrix::operator/= - 0 factor specified all values in Matrix set to ";
-        std::cerr << MATRIX_VERY_LARGE_VALUE << endln;
+        std::cerr << MATRIX_VERY_LARGE_VALUE << endl;
 
         double *dataPtr = data;
 
@@ -1739,7 +1740,7 @@ Matrix::Output(ostream &s) const
             s <<  (*this)(i, j) << "  ";
         }
 
-        s << endln;
+        s << endl;
     }
 }
 
@@ -1760,9 +1761,9 @@ Matrix::Input(istream &s)
 
 ostream &operator<<(ostream &s, const Matrix &V)
 {
-    s << endln;
+    s << endl;
     V.Output(s);
-    s << endln;
+    s << endl;
     return s;
 }
 

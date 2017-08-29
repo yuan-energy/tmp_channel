@@ -39,7 +39,7 @@
 //
 // What: "@(#) Matrix.h, revA"
 
-#include <OPS_Globals.h>
+// #include <OPS_Globals.h>
 // Boris Jeremic 17Nov2008
 #include <iostream>
 using namespace std;
@@ -48,7 +48,7 @@ class Vector;
 class ID;
 class Message;
 
-#include <Tensor.h> // cannot use class as Tensor is itself defined in Tensor.h
+// #include <Tensor.h> // cannot use class as Tensor is itself defined in Tensor.h
 
 
 #define MATRIX_VERY_LARGE_VALUE 1.0e213
@@ -76,7 +76,7 @@ public:
 
     int Solve(const Vector &V, Vector &res) const;
     int Solve(const Matrix &M, Matrix &res) const;
-    int Invert(Matrix &res) const;
+    // int Invert(Matrix &res) const;
 
     int addMatrix(double factThis, const Matrix &other, double factOther);
     int addMatrixProduct(double factThis, const Matrix &A, const Matrix &B, double factOther); // AB
@@ -89,7 +89,7 @@ public:
     Matrix operator()(const ID &rows, const ID &cols) const;
 
     Matrix &operator=(const Matrix &M);
-    Matrix &operator=(const Tensor &T);
+    // Matrix &operator=(const Tensor &T);
 
     // matrix operations which will preserve the derived type and
     // which can be implemented efficiently without many constructor calls.
@@ -142,19 +142,43 @@ public:
     // NOTE: This is awful programming....
     friend class Vector;
     friend class Message;
-    friend class TCP_Socket;
-    friend class TCP_SocketNoDelay;
-    friend class UDP_Socket;
-    friend class MPI_Channel;
-    friend class HDF5_Channel;
-    friend class H5OutputWriter;
-    friend class OutputWriter;
-    friend class MySqlDatastore;
-    friend class MySqlDataRecorder;
-    friend class BerkeleyDbDatastore;
-    friend class ElasticIsotropic3D; //Guanzhou added for PDD
-    friend class TwoStageEquivalentElasticIsotropic3D;
-    friend class Domain_Reduction_Method_HDF5_input;
+    // friend class TCP_Socket;
+    // friend class TCP_SocketNoDelay;
+    // friend class UDP_Socket;
+    // friend class MPI_Channel;
+    // friend class HDF5_Channel;
+    // friend class H5OutputWriter;
+    // friend class OutputWriter;
+    // friend class MySqlDatastore;
+    // friend class MySqlDataRecorder;
+    // friend class BerkeleyDbDatastore;
+    // friend class ElasticIsotropic3D; //Guanzhou added for PDD
+    // friend class TwoStageEquivalentElasticIsotropic3D;
+    // friend class Domain_Reduction_Method_HDF5_input;
+
+
+    template<typename Archive>
+    void save(Archive& archive) const{
+        archive(numRows);
+        archive(numCols);
+        archive(dataSize);
+        archive(fromFree);
+        for (int i = 0; i < dataSize; ++i){
+            archive(*(data+i));
+        }
+    }
+    template<typename Archive>
+    void load(Archive& archive) {
+        archive(numRows);
+        archive(numCols);
+        archive(dataSize);
+        archive(fromFree);
+        data = new double[dataSize];
+        for (int i = 0; i < dataSize; ++i){
+            archive(*(data+i));
+        }
+    }
+    
 protected:
 
 private:
@@ -193,12 +217,12 @@ Matrix::operator()(int row, int col)
 
     if ((row < 0) || (row >= numRows))
     {
-        cerr << "Matrix::operator() - row " << row << " out of range [0, " <<  numRows - 1 << endln;
+        cerr << "Matrix::operator() - row " << row << " out of range [0, " <<  numRows - 1 << endl;
         return data[0];
     }
     else if ((col < 0) || (col >= numCols))
     {
-        cerr << "Matrix::operator() - row " << col << " out of range [0, " <<  numCols - 1 << endln;
+        cerr << "Matrix::operator() - row " << col << " out of range [0, " <<  numCols - 1 << endl;
         return MATRIX_NOT_VALID_ENTRY;
     }
 
@@ -214,12 +238,12 @@ Matrix::operator()(int row, int col) const
 
     if ((row < 0) || (row >= numRows))
     {
-        cerr << "Matrix::operator() - row " << row << " out of range [0, " <<  numRows - 1 << endln;
+        cerr << "Matrix::operator() - row " << row << " out of range [0, " <<  numRows - 1 << endl;
         return data[0];
     }
     else if ((col < 0) || (col >= numCols))
     {
-        cerr << "Matrix::operator() - row " << col << " out of range [0, " <<  numCols - 1 << endln;
+        cerr << "Matrix::operator() - row " << col << " out of range [0, " <<  numCols - 1 << endl;
         return MATRIX_NOT_VALID_ENTRY;
     }
 

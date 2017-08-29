@@ -37,7 +37,7 @@
 #ifndef Vector_h
 #define Vector_h
 
-#include <OPS_Globals.h>
+// #include <OPS_Globals.h>
 // Boris Jeremic 17Nov2008
 #include <iostream>
 using namespace std;
@@ -49,9 +49,9 @@ class ID;
 
 class Matrix;
 class Message;
-class SystemOfEqn;
+// class SystemOfEqn;
 
-#include <Tensor.h> // cannot use class as Tensor is itself defined in Tensor.h
+// #include <Tensor.h> // cannot use class as Tensor is itself defined in Tensor.h
 
 
 class Vector
@@ -86,7 +86,7 @@ public:
     double &operator[](int x);
     Vector operator()(const ID &rows) const;
     Vector &operator=(const Vector  &V);
-    Vector &operator=(const Tensor  &T);
+    // Vector &operator=(const Tensor  &T);
 
     Vector &operator+=(double fact);
     Vector &operator-=(double fact);
@@ -117,18 +117,36 @@ public:
     friend Vector operator*(double a, const Vector &V);
 
     friend class Message;
-    friend class SystemOfEqn;
+    // friend class SystemOfEqn;
     friend class Matrix;
-    friend class TCP_SocketNoDelay;
-    friend class TCP_Socket;
-    friend class UDP_Socket;
-    friend class MPI_Channel;
-    friend class HDF5_Channel;
-    friend class MySqlDatastore;
-    friend class MySqlDataRecorder;
-    friend class BerkeleyDbDatastore;
-    friend class OutputWriter;
-    friend class H5OutputWriter;
+    // friend class TCP_SocketNoDelay;
+    // friend class TCP_Socket;
+    // friend class UDP_Socket;
+    // friend class MPI_Channel;
+    // friend class HDF5_Channel;
+    // friend class MySqlDatastore;
+    // friend class MySqlDataRecorder;
+    // friend class BerkeleyDbDatastore;
+    // friend class OutputWriter;
+    // friend class H5OutputWriter;
+    
+    template<typename Archive>
+    void save(Archive& archive) const{
+        archive(sz);
+        archive(fromFree);
+        for (int i = 0; i < sz; ++i){
+            archive(*(theData+i));
+        }
+    }
+    template<typename Archive>
+    void load(Archive& archive) {
+        archive(sz);
+        archive(fromFree);
+        theData = new double[sz];
+        for (int i = 0; i < sz; ++i){
+            archive(*(theData+i));
+        }
+    }
 
 private:
     static double VECTOR_NOT_VALID_ENTRY;
@@ -163,7 +181,7 @@ Vector::operator()(int x) const
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        cerr << "Vector::(loc) - loc " << x << " outside range [0, " << sz - 1 << endln;
+        cerr << "Vector::(loc) - loc " << x << " outside range [0, " << sz - 1 << endl;
         return VECTOR_NOT_VALID_ENTRY;
     }
 
@@ -180,7 +198,7 @@ Vector::operator()(int x)
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        cerr << "Vector::(loc) - loc " << x << " outside range [0, " << sz - 1 << endln;
+        cerr << "Vector::(loc) - loc " << x << " outside range [0, " << sz - 1 << endl;
         return VECTOR_NOT_VALID_ENTRY;
     }
 

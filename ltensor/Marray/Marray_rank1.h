@@ -70,6 +70,33 @@ std::ostream & operator << (std::ostream & os, const Marray<T,rank,base> & v);
 template < class T , class base >
 class Marray <T,rank,base> : public base
 {
+	// template<typename Archive>
+	// void save(Archive& archive) const;
+	// template<typename Archive>
+	// void load(Archive& archive) ;
+	
+	// Type* __restrict__ data;
+	// int stride[rank];
+	// unsigned int size[rank];
+	// int dataCount;
+	// template<typename Archive>
+	// void save(Archive& archive) const{
+	// 	archive(rank);
+	// 	archive(base::dataCount);
+	// 	for (int i = 0; i < rank; ++i){archive(base::size[i]);}
+	// 	for (int i = 0; i < rank; ++i){archive(base::stride[i]);}
+	// 	for (int i = 0; i < base::dataCount ; ++i){archive(*(base::data+i));}
+	// }
+
+	// template<typename Archive>
+	// void load(Archive& archive) {
+	// 	archive(rank);
+	// 	archive(base::dataCount);
+	// 	base::data = new double[base::dataCount];
+	// 	for (int i = 0; i < rank; ++i){archive(base::size[i]);}
+	// 	for (int i = 0; i < rank; ++i){archive(base::stride[i]);}
+	// 	for (int i = 0; i < base::dataCount ; ++i){archive(*(base::data+i));}
+	// }
 
     public:
     ///////////////

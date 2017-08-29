@@ -39,10 +39,10 @@
 //
 // What: "@(#) MovableObject.h, revA"
 
-#include <classTags.h>
+// #include <classTags.h>
 
-class Channel;
-class FEM_ObjectBroker;
+// class Channel;
+// class FEM_ObjectBroker;
 
 class MovableObject
 {
@@ -55,13 +55,19 @@ class MovableObject
         int getDbTag(void) const;
         void setDbTag(int dbTag);
 
-        virtual int sendSelf(int commitTag, Channel &theChannel) = 0;
-        virtual int receiveSelf(int commitTag, Channel &theChannel,
-                             FEM_ObjectBroker &theBroker) = 0;
+        // virtual int sendSelf(int commitTag, Channel &theChannel) = 0;
+        // virtual int receiveSelf(int commitTag, Channel &theChannel,
+        //                      FEM_ObjectBroker &theBroker) = 0;
 
+        
+
+        template<typename Archive>
+        void serialize(Archive& archive){
+            archive(classTag, dbTag);
+        }
     protected:
 
-    private:
+    public:
         int classTag;
         int dbTag;
 };

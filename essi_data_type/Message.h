@@ -32,7 +32,8 @@
 
 #ifndef Message_h
 #define Message_h
-
+#include <string>
+#include <iostream>
 class Message
 {
     public:
@@ -43,13 +44,34 @@ class Message
         virtual ~Message();
 
         virtual int putData(char* theData, int startLoc, int endLoc);
-        virtual const char* getData(void);
-        virtual int getSize(void);
+        virtual char* getData(void) const;
+        virtual int getSize(void) const;
+        // virtual int setSize(int );
+        virtual int setData(const char* data_, int len_);
+        // friend class TCP_Socket;
+        // friend class TCP_SocketNoDelay;
+        // friend class UDP_Socket;
+        // friend class MPI_Channel;
 
-        friend class TCP_Socket;
-        friend class TCP_SocketNoDelay;
-        friend class UDP_Socket;
-        friend class MPI_Channel;
+        // template<typename Archive>
+        // void save(Archive& archive) const{
+        //     std::string tmp(data, length);
+        //     archive(tmp);
+        // }
+
+        // template<typename Archive>
+        // void load(Archive& archive) {
+        //     std::string tmp;
+        //     archive(tmp);
+        //     std::cout<<"load msg is: " << tmp <<"\n";
+        //     data   = const_cast<char*>( tmp.c_str() ) ;
+        //     // data   = tmp.c_str()  ;
+        //     length = tmp.size() ;
+
+        //     std::string tran_msg(data, length);
+        //     std::cout<<"tran_msg is: ";
+        //     std::cout<< tran_msg <<"\n";
+        // }
 
     private:
         int length;
@@ -57,3 +79,4 @@ class Message
 };
 
 #endif
+    // Message msg1( const_cast<char*>(str.c_str()), str.size());

@@ -72,7 +72,7 @@ ID::ID(int size)
 
     if (data == 0)
     {
-        cerr << "ID::ID(int): ran out of memory with size " << size << endln;
+        cerr << "ID::ID(int): ran out of memory with size " << size << endl;
         exit(-1);
     }
 
@@ -114,7 +114,7 @@ ID::ID(int size, int arraySz, int fillValue)
 
     if (arraySz < sz)
     {
-        cerr << "ID::ID(size, arraySize) - arraySize " << arraySz  << " specified < " << size << endln;
+        cerr << "ID::ID(size, arraySize) - arraySize " << arraySz  << " specified < " << size << endl;
         arraySz = sz;
     }
 
@@ -126,7 +126,7 @@ ID::ID(int size, int arraySz, int fillValue)
 
     if (data == 0)
     {
-        cerr << "ID::ID(int, int): ran out of memory with arraySize: " << arraySize << endln;
+        cerr << "ID::ID(int, int): ran out of memory with arraySize: " << arraySize << endl;
         exit(-1);
     }
 
@@ -155,7 +155,7 @@ ID::ID(int *d, int size, bool cleanIt)
 
             if (data == 0)
             {
-                cerr << "ID::ID(int, int): ran out of memory with arraySize " << arraySize << endln;
+                cerr << "ID::ID(int, int): ran out of memory with arraySize " << arraySize << endl;
                 exit(-1);
             }
         }
@@ -185,7 +185,7 @@ ID::ID(const ID &other)
 
     if (data == 0)
     {
-        cerr << "ID::ID(ID): ran out of memory with arraySize " << arraySize << endln,
+        cerr << "ID::ID(ID): ran out of memory with arraySize " << arraySize << endl,
              exit(-1);
     }
 
@@ -353,7 +353,7 @@ ID::operator[](int x)
         else
         {
             // we could not allocate more mem .. leave the current size
-            cerr << "ID::[]): ran out of memory with arraySize " << arraySize << endln;
+            cerr << "ID::[]): ran out of memory with arraySize " << arraySize << endl;
             return ID_NOT_VALID_ENTRY;
         }
     }
@@ -474,7 +474,7 @@ ID::operator=(const ID &V)
                 if (data == 0)
                 {
                     cerr << "WARNING ID::=(ID) - ran out of memory ";
-                    cerr << "for new array of size" << arraySize << endln;
+                    cerr << "for new array of size" << arraySize << endl;
                     sz = 0;
                     arraySize = 0;
                 }

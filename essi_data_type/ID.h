@@ -37,7 +37,7 @@
 #ifndef ID_h
 #define ID_h
 
-#include <OPS_Globals.h>
+// #include <OPS_Globals.h>
 #include <iostream>
 
 
@@ -85,12 +85,32 @@ public:
     // friend class UDP_Socket;
     // friend class TCP_Socket;
     // friend class TCP_SocketNoDelay;
-    friend class MPI_Channel;
-    friend class OutputWriter;
-    friend class H5OutputWriter;
+    // friend class MPI_Channel;
+    // friend class OutputWriter;
+    // friend class H5OutputWriter;
     // friend class MySqlDatastore;
     // friend class MySqlDataRecorder;
     // friend class BerkeleyDbDatastore;
+
+    template<typename Archive>
+    void save(Archive& archive) const{
+        archive(sz);
+        archive(arraySize);
+        archive(fromFree);
+        for (int i = 0; i < arraySize; ++i){
+            archive(*(data+i));
+        }
+    }
+    template<typename Archive>
+    void load(Archive& archive) {
+        archive(sz);
+        archive(arraySize);
+        archive(fromFree);
+        data = new int[arraySize];
+        for (int i = 0; i < arraySize; ++i){
+            archive(*(data+i));
+        }
+    }
 
 private:
     static int ID_NOT_VALID_ENTRY;
@@ -115,7 +135,7 @@ ID::operator()(int x)
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        std::cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endln;
+        std::cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endl;
         return ID_NOT_VALID_ENTRY;
     }
 
@@ -132,7 +152,7 @@ ID::operator()(int x) const
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endln;
+        cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endl;
         return ID_NOT_VALID_ENTRY;
     }
 

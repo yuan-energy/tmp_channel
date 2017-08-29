@@ -36,7 +36,7 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include "ID.h"
-#include <Tensor.h>
+// #include <Tensor.h>
 
 #include <stdlib.h>
 #include <math.h>
@@ -73,7 +73,7 @@ Vector::Vector(int size)
 
     if (theData == 0)
     {
-        std::cerr << "Vector::Vector(int) - out of memory creating vector of size " << size << endln;
+        std::cerr << "Vector::Vector(int) - out of memory creating vector of size " << size << endl;
         sz = 0; // set this should fatal error handler not kill process!!
     }
 
@@ -122,7 +122,7 @@ Vector::Vector(const Vector &other)
 
     if (theData == 0)
     {
-        std::cerr << "Vector::Vector(int) - out of memory creating vector of size " << sz << endln;
+        std::cerr << "Vector::Vector(int) - out of memory creating vector of size " << sz << endl;
         exit(-1);
     }
 
@@ -196,7 +196,7 @@ Vector::resize(int newSize)
         {
             sz = 0;
             fromFree = 0;
-            std::cerr << "Vector::resize() - out of memory for size " << newSize << endln;
+            std::cerr << "Vector::resize() - out of memory for size " << newSize << endl;
             sz = 0;
             return -2;
         }
@@ -865,7 +865,7 @@ Vector::operator[](int x)
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        std::cerr << "Vector::() - x " << x << " outside range 0 - << " << sz - 1 << endln;
+        std::cerr << "Vector::() - x " << x << " outside range 0 - << " << sz - 1 << endl;
         return VECTOR_NOT_VALID_ENTRY;
     }
 
@@ -881,7 +881,7 @@ double Vector::operator[](int x) const
     // check if it is inside range [0,sz-1]
     if (x < 0 || x >= sz)
     {
-        std::cerr << "Vector::() - x " << x << " outside range 0 - " <<  sz - 1 << endln;
+        std::cerr << "Vector::() - x " << x << " outside range 0 - " <<  sz - 1 << endl;
         return VECTOR_NOT_VALID_ENTRY;
     }
 
@@ -984,71 +984,71 @@ Vector::operator=(const Vector &V)
 
 
 
-Vector &
-Vector::operator=(const Tensor &V)
-{
-    int rank = V.rank();
+// Vector &
+// Vector::operator=(const Tensor &V)
+// {
+//     int rank = V.rank();
 
-    if (rank != 2)
-    {
-        std::cerr << "Vector::operator=() - tensor must be of rank 2\n";
-        return *this;
-    }
+//     if (rank != 2)
+//     {
+//         std::cerr << "Vector::operator=() - tensor must be of rank 2\n";
+//         return *this;
+//     }
 
-    int dim = V.dim(1);
+//     int dim = V.dim(1);
 
-    if (dim != V.dim(2))
-    {
-        std::cerr << "Vector::operator=() - tensor must have square dimensions\n";
-        return *this;
-    }
+//     if (dim != V.dim(2))
+//     {
+//         std::cerr << "Vector::operator=() - tensor must have square dimensions\n";
+//         return *this;
+//     }
 
-    if (dim != 2 || dim != 3 || dim != 1)
-    {
-        std::cerr << "Vector::operator=() - tensor must be of dimension 2 or 3\n";
-        return *this;
-    }
+//     if (dim != 2 || dim != 3 || dim != 1)
+//     {
+//         std::cerr << "Vector::operator=() - tensor must be of dimension 2 or 3\n";
+//         return *this;
+//     }
 
-    if (dim == 1)
-    {
-        if (sz != 1)
-        {
-            std::cerr << "Vector::operator=() - Vector size must be 1\n";
-            return *this;
-        }
+//     if (dim == 1)
+//     {
+//         if (sz != 1)
+//         {
+//             std::cerr << "Vector::operator=() - Vector size must be 1\n";
+//             return *this;
+//         }
 
-        theData[0] = V.cval(1, 1);
-    }
-    else if (dim == 2)
-    {
-        if (sz != 3)
-        {
-            std::cerr << "Vector::operator=() - Vector size must be 3\n";
-            return *this;
-        }
+//         theData[0] = V.cval(1, 1);
+//     }
+//     else if (dim == 2)
+//     {
+//         if (sz != 3)
+//         {
+//             std::cerr << "Vector::operator=() - Vector size must be 3\n";
+//             return *this;
+//         }
 
-        theData[0] = V.cval(1, 1);
-        theData[1] = V.cval(2, 2);
-        theData[2] = V.cval(1, 2);
-    }
-    else
-    {
-        if (sz != 6)
-        {
-            std::cerr << "Vector::operator=() - Vector size must be 6\n";
-            return *this;
-        }
+//         theData[0] = V.cval(1, 1);
+//         theData[1] = V.cval(2, 2);
+//         theData[2] = V.cval(1, 2);
+//     }
+//     else
+//     {
+//         if (sz != 6)
+//         {
+//             std::cerr << "Vector::operator=() - Vector size must be 6\n";
+//             return *this;
+//         }
 
-        theData[0] = V.cval(1, 1);
-        theData[1] = V.cval(2, 2);
-        theData[2] = V.cval(3, 3);
-        theData[3] = V.cval(1, 2);
-        theData[4] = V.cval(1, 3);
-        theData[5] = V.cval(2, 3);
-    }
+//         theData[0] = V.cval(1, 1);
+//         theData[1] = V.cval(2, 2);
+//         theData[2] = V.cval(3, 3);
+//         theData[3] = V.cval(1, 2);
+//         theData[4] = V.cval(1, 3);
+//         theData[5] = V.cval(2, 3);
+//     }
 
-    return *this;
-}
+//     return *this;
+// }
 
 
 
@@ -1241,7 +1241,7 @@ Vector::operator+=(const Vector &other)
 
     if (sz != other.sz)
     {
-        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << other.sz << endln;
+        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << other.sz << endl;
         return *this;
     }
 
@@ -1268,7 +1268,7 @@ Vector::operator-=(const Vector &other)
 
     if (sz != other.sz)
     {
-        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << other.sz << endln;
+        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << other.sz << endl;
         return *this;
     }
 
@@ -1295,7 +1295,7 @@ Vector::operator+(const Vector &b) const
 
     if (sz != b.sz)
     {
-        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << b.sz << endln;
+        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << b.sz << endl;
         return *this;
     }
 
@@ -1326,7 +1326,7 @@ Vector::operator-(const Vector &b) const
 
     if (sz != b.sz)
     {
-        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << b.sz << endln;
+        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << b.sz << endl;
         return *this;
     }
 
@@ -1356,7 +1356,7 @@ Vector::operator^(const Vector &V) const
 
     if (sz != V.sz)
     {
-        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << V.sz << endln;
+        std::cerr << "WARNING Vector::operator+=(Vector):Vectors not of same sizes: " << sz << " != " << V.sz << endl;
         return 0.0;
     }
 
@@ -1412,7 +1412,7 @@ ostream &operator<<(ostream &s, const Vector &V)
         s << V(i) << " ";
     }
 
-    return s << endln;
+    return s << endl;
 }
 
 // friend istream &operator>>(istream &s, Vector &V)

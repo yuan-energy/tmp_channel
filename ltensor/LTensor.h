@@ -37,7 +37,33 @@
 #include "./Expr/Exprs.h"
 
 
-typedef Marray<double,1 > DTensor1;
+typedef Marray<double,1> DTensor1;
+
+
+// typedef Marray<double,1, TinyArray_base<double,1> > DTensor1;
+// #define rank 1
+// template<>
+// template<typename Archive>
+// void DTensor1::save(Archive& archive) const{
+// 	archive(rank);
+// 	archive(dataCount);
+// 	for (int i = 0; i < rank; ++i){archive(size[i]);}
+// 	for (int i = 0; i < rank; ++i){archive(stride[i]);}
+// 	for (int i = 0; i < dataCount ; ++i){archive(*(data+i));}
+// }
+
+// template<>
+// template<typename Archive>
+// void DTensor1::load(Archive& archive) {
+// 	archive(rank);
+// 	archive(dataCount);
+// 	data = new double[dataCount];
+// 	for (int i = 0; i < rank; ++i){archive(size[i]);}
+// 	for (int i = 0; i < rank; ++i){archive(stride[i]);}
+// 	for (int i = 0; i < dataCount ; ++i){archive(*(data+i));}
+// }
+// #undef rank
+
 typedef Marray<double,2 > DTensor2;
 typedef Marray<double,3 > DTensor3;
 typedef Marray<double,4 > DTensor4;

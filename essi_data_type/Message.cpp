@@ -27,7 +27,7 @@
 //
 
 #include "Message.h"
-#include <OPS_Globals.h>
+// #include <OPS_Globals.h>
 
 #ifndef _WIN32
 #include <strings.h>
@@ -89,16 +89,23 @@ Message::putData(char* theData, int startLoc, int endLoc)
     }
 }
 
-const char*
-Message::getData(void)
+char*
+Message::getData(void) const
 {
     return data;
 }
 
 int
-Message::getSize()
+Message::getSize() const
 {
     return length;
 }
 
+int
+Message::setData(const char* data_, int len_)
+{
+    data = const_cast<char*>(data_);
+    length = len_;
+    return 0;
+}
 
