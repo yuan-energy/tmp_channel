@@ -140,9 +140,14 @@ public:
     }
     template<typename Archive>
     void load(Archive& archive) {
-        archive(sz);
+        int read_sz;
+        archive(read_sz);
+        if(read_sz!=sz){
+            std::cerr<<"ERROR!!! During restart, the read vector size is different from the allocated vector size. \n";
+            std::cerr<<"ERROR!!! Please allocated the correct vector size before receiveVector. \n";
+            exit(-1);
+        }
         archive(fromFree);
-        theData = new double[sz];
         for (int i = 0; i < sz; ++i){
             archive(*(theData+i));
         }

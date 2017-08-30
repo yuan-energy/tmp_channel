@@ -24,24 +24,6 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 #pragma once
-#include <LTensor.h>
-#include <MovableObject.h>
-#include <Vector.h>
-#include <ID.h>
-#include <Matrix.h>
-#include <Message.h>
-#include <Message.h>
-
-#include <cereal/archives/binary.hpp>
-#include <cereal/types/vector.hpp>
-#include <cereal/types/string.hpp>
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include <string>
-#include <ChannelAddress.h>
-#include <nDarray.h>
-#include <FEM_ObjectBroker.h>
 #include "Serialization_Channel.h"
 
 class Serialization_output_Channel: public Serialization_Channel

@@ -171,13 +171,19 @@ public:
     void load(Archive& archive) {
         archive(numRows);
         archive(numCols);
-        archive(dataSize);
+        int read_sz;
+        archive(read_sz);
+        if(read_sz!=dataSize){
+            std::cerr<<"ERROR!!! During restart, the read Matrix size is different from the allocated Matrix size. \n";
+            std::cerr<<"ERROR!!! Please allocated the correct Matrix size before receiveVector. \n";
+            exit(-1);
+        }
         archive(fromFree);
-        data = new double[dataSize];
         for (int i = 0; i < dataSize; ++i){
             archive(*(data+i));
         }
     }
+
     
 protected:
 

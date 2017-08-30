@@ -66,14 +66,21 @@ Serialization_input_Channel
 	return 0;
 }
 
+
 int 
 Serialization_input_Channel
 ::receiveDTensor1
 (int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress *theAddress){
-	iarchive(theTensor.dataCount);
+	int read_sz;
+	iarchive(read_sz);
+	if(read_sz!=theTensor.dataCount){
+	    std::cerr<<"ERROR!!! During restart, the read DTensor1 size is different from the allocated DTensor1 size. \n";
+	    std::cerr<<"ERROR!!! Please allocated the correct DTensor1 size before receiveVector. \n";
+	    exit(-1);
+	}
 	for (int i = 0; i < 1; ++i){iarchive(theTensor.size[i]);}
 	for (int i = 0; i < 1; ++i){iarchive(theTensor.stride[i]);}
-	theTensor.data = new double[theTensor.dataCount];
+	// theTensor.data = new double[theTensor.dataCount];
 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
 	return 0;
 }
@@ -82,10 +89,16 @@ int
 Serialization_input_Channel
 ::receiveDTensor2
 (int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress *theAddress){
-	iarchive(theTensor.dataCount);
+	int read_sz;
+	iarchive(read_sz);
+	if(read_sz!=theTensor.dataCount){
+	    std::cerr<<"ERROR!!! During restart, the read DTensor2 size is different from the allocated DTensor2 size. \n";
+	    std::cerr<<"ERROR!!! Please allocated the correct DTensor2 size before receiveVector. \n";
+	    exit(-1);
+	}
 	for (int i = 0; i < 2; ++i){iarchive(theTensor.size[i]);}
 	for (int i = 0; i < 2; ++i){iarchive(theTensor.stride[i]);}
-	theTensor.data = new double[theTensor.dataCount];
+	// theTensor.data = new double[theTensor.dataCount];
 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
 	return 0;
 }
@@ -94,25 +107,40 @@ int
 Serialization_input_Channel
 ::receiveDTensor3
 (int dbTag, int commitTag,  DTensor3 &theTensor, ChannelAddress *theAddress){
-	iarchive(theTensor.dataCount);
+	int read_sz;
+	iarchive(read_sz);
+	if(read_sz!=theTensor.dataCount){
+	    std::cerr<<"ERROR!!! During restart, the read DTensor3 size is different from the allocated DTensor3 size. \n";
+	    std::cerr<<"ERROR!!! Please allocated the correct DTensor3 size before receiveVector. \n";
+	    exit(-1);
+	}
 	for (int i = 0; i < 3; ++i){iarchive(theTensor.size[i]);}
 	for (int i = 0; i < 3; ++i){iarchive(theTensor.stride[i]);}
-	theTensor.data = new double[theTensor.dataCount];
+	// theTensor.data = new double[theTensor.dataCount];
 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
 	return 0;
 }
+
+
 
 int 
 Serialization_input_Channel
 ::receiveDTensor4
 (int dbTag, int commitTag,  DTensor4 &theTensor, ChannelAddress *theAddress){
-	iarchive(theTensor.dataCount);
+	int read_sz;
+	iarchive(read_sz);
+	if(read_sz!=theTensor.dataCount){
+	    std::cerr<<"ERROR!!! During restart, the read DTensor4 size is different from the allocated DTensor4 size. \n";
+	    std::cerr<<"ERROR!!! Please allocated the correct DTensor4 size before receiveVector. \n";
+	    exit(-1);
+	}
 	for (int i = 0; i < 4; ++i){iarchive(theTensor.size[i]);}
 	for (int i = 0; i < 4; ++i){iarchive(theTensor.stride[i]);}
-	theTensor.data = new double[theTensor.dataCount];
+	// theTensor.data = new double[theTensor.dataCount];
 	for (int i = 0; i < theTensor.dataCount; ++i){iarchive( *(theTensor.data + i) );}
 	return 0;
 }
+
 
 int 
 Serialization_input_Channel

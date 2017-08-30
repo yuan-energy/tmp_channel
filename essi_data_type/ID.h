@@ -103,10 +103,17 @@ public:
     }
     template<typename Archive>
     void load(Archive& archive) {
-        archive(sz);
+        int read_sz;
+        archive(read_sz);
+        if(read_sz!=sz){
+            std::cerr<<"ERROR!!! During restart, the read ID size is different from the allocated ID size. \n";
+            std::cerr<<"ERROR!!! Please allocated the correct ID size before receiveVector. \n";
+            exit(-1);
+        }
+
         archive(arraySize);
         archive(fromFree);
-        data = new int[arraySize];
+        
         for (int i = 0; i < arraySize; ++i){
             archive(*(data+i));
         }

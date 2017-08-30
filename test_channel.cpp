@@ -122,9 +122,9 @@ int main(int argc, char const *argv[])
 
 
 		// ******************************************************************
-		DTensor1 shadow_stress1 ;
-		DTensor2 shadow_stress2 ;
-		DTensor4 shadow_stiff4 ;
+		DTensor1 shadow_stress1(6) ;
+		DTensor2 shadow_stress2(2,2) ;
+		DTensor4 shadow_stiff4(2,2,2,2) ;
 		the_load_channel.receiveDTensor1(0,0, shadow_stress1);
 		the_load_channel.receiveDTensor2(0,0, shadow_stress2);
 		the_load_channel.receiveDTensor4(0,0, shadow_stiff4);
@@ -140,19 +140,19 @@ int main(int argc, char const *argv[])
 		std::cout<<shadow_obj1.classTag <<"\t"<< shadow_obj1.dbTag <<"\n";
 
 		// ******************************************************************
-		Vector shadow_myVec1;
+		Vector shadow_myVec1(4) ;
 		the_load_channel.receiveVector(0,0, shadow_myVec1);
 		std::cout<<"The shadow_myVec1 is " <<"\n";
 		std::cout<<shadow_myVec1 <<"\n";
 		
 		// ******************************************************************
-		ID shadow_id1;
+		ID shadow_id1(2) ;
 		the_load_channel.receiveID(0,0, shadow_id1);
 		std::cout<<"The shadow_id1 is " <<"\n";
 		std::cout<< shadow_id1 <<"\n";
 
 		// ******************************************************************
-		Matrix shadow_mat1;
+		Matrix shadow_mat1(2,2) ;
 		the_load_channel.receiveMatrix(0,0, shadow_mat1);
 		std::cout<<"The shadow_mat1 is " <<"\n";
 		std::cout<< shadow_mat1 <<"\n";
