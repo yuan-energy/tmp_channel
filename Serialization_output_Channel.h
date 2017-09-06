@@ -38,7 +38,18 @@ public:
 	~Serialization_output_Channel();
 	void close() final;
 
-	int send_std_vector(int dbTag, int commitTag, const std::vector<int> & theVector, ChannelAddress* theAddress = 0)  final;
+	template <typename val_type>
+	int send_single_POD(int dbTag, int commitTag, val_type& val, ChannelAddress* theAddress = 0 ){
+		oarchive(val);
+		return 0;
+	}
+
+	template <typename val_type>
+	int send_std_vector(int dbTag, int commitTag, const std::vector<val_type> & theVector, ChannelAddress* theAddress = 0) {
+		oarchive(theVector);
+		return 0;
+	}
+
 	int sendString(int dbTag, int commitTag,  const std::string &theString, ChannelAddress* theAddress = 0) final;
 	int sendDTensor1(int dbTag, int commitTag,  const DTensor1 &theTensor, ChannelAddress* theAddress = 0) final;
 	int sendDTensor2(int dbTag, int commitTag,  const DTensor2 &theTensor, ChannelAddress* theAddress = 0) final;

@@ -52,14 +52,6 @@ Serialization_output_Channel
 
 int 
 Serialization_output_Channel
-::send_std_vector
-(int dbTag, int commitTag, const std::vector<int> & theVector, ChannelAddress *theAddress){
-	oarchive(theVector);
-	return 0;
-}
-
-int 
-Serialization_output_Channel
 ::sendString
 (int dbTag, int commitTag,  const std::string &theString, ChannelAddress *theAddress){
 	oarchive(theString);

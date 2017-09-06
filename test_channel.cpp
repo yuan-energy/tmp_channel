@@ -28,11 +28,16 @@ int main(int argc, char const *argv[])
 		// ******************************************************************
 		// save data to disk
 		// ******************************************************************
-		std::vector<int> vec1 = {1,2,23,4,5,541};
-		std::vector<int> vec2 = {10,20,230,40,50,5410};
+		int val1 = 2 ; 
+		double val2 = 3.3; 
+		thechannel.send_single_POD<int>(0,0, val1);
+		thechannel.send_single_POD<double>(0,0, val2);
 
-		thechannel.send_std_vector(0,0, vec1);
-		thechannel.send_std_vector(0,0, vec2);
+		// ******************************************************************
+		std::vector<int> vec1 = {1,2,23,4,5,541};
+		std::vector<float> vec2 = {10,20,230.4,40,50,5410.6};
+		thechannel.send_std_vector<int>(0,0, vec1);
+		thechannel.send_std_vector<float>(0,0, vec2);
 
 		// ******************************************************************
 		std::string str1 = "vonMises_material";
@@ -61,7 +66,9 @@ int main(int argc, char const *argv[])
 
 		// ******************************************************************
 		Vector myVec1(4);
-		myVec1(2) = 33;
+		myVec1(2) = 1./33;
+		myVec1(3) = 1./6 ; 
+		myVec1(2) = 1./100;
 		thechannel.sendVector(0,0, myVec1);
 
 		// ******************************************************************
@@ -103,11 +110,20 @@ int main(int argc, char const *argv[])
 		// ******************************************************************
 		// load data back
 		// ******************************************************************
+		int shadow_val1 =0 ; 
+		double shadow_val2 =0 ; 
+		the_load_channel.receive_single_POD<int>(0,0, shadow_val1);
+		the_load_channel.receive_single_POD<double>(0,0, shadow_val2);
+		std::cout<<"The received POD data is \n";
+		std::cout<< shadow_val1 << " \n";
+		std::cout<< shadow_val2 << " \n";
+
+		// ******************************************************************
 		std::vector<int> shadow_vec1;
-		std::vector<int> shadow_vec2;
-		the_load_channel.receive_std_vector(0,0, shadow_vec1);
-		the_load_channel.receive_std_vector(0,0, shadow_vec2);
-		std::cout<<"The data is " <<"\n";
+		std::vector<float> shadow_vec2;
+		the_load_channel.receive_std_vector<int>(0,0, shadow_vec1);
+		the_load_channel.receive_std_vector<float>(0,0, shadow_vec2);
+		std::cout<<"The std vector data is " <<"\n";
 		for(uint i=0; i<shadow_vec1.size() ; ++i){std::cout<<shadow_vec1[i]<<"\t";} std::cout<< "\n" ;
 		for(uint i=0; i<shadow_vec2.size() ; ++i){std::cout<<shadow_vec2[i]<<"\t";} std::cout<< "\n" ;
 		

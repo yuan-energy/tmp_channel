@@ -55,9 +55,16 @@ public:
 	Serialization_Channel();
 	~Serialization_Channel();
 	virtual void close()=0;
+	
+	// template <typename val_type>
+	// virtual int send_single_POD(int dbTag, int commitTag, val_type val, ChannelAddress* theAddress = 0 );
+	// template <typename val_type>
+	// virtual int receive_single_POD(int dbTag, int commitTag, val_type val, ChannelAddress* theAddress = 0 ) ;
 
-	virtual int send_std_vector(int dbTag, int commitTag, const std::vector<int> & theVector, ChannelAddress* theAddress = 0) ;
-	virtual int receive_std_vector(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress* theAddress = 0) ;
+	// template <typename val_type>
+	// virtual int send_std_vector(int dbTag, int commitTag, const std::vector<val_type> & theVector, ChannelAddress* theAddress = 0) ;
+	// template <typename val_type>
+	// virtual int receive_std_vector(int dbTag, int commitTag, std::vector<val_type> & theVector, ChannelAddress* theAddress = 0) ;
 
 	virtual int sendString(int dbTag, int commitTag,  const std::string &theString, ChannelAddress* theAddress = 0);
 	virtual int receiveString(int dbTag, int commitTag,  std::string &theString, ChannelAddress* theAddress = 0);

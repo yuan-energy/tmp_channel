@@ -50,13 +50,6 @@ Serialization_input_Channel
 	std::cerr<<" --> Serialization_input_Channel is closed!"<<std::endl;
 }
 
-int 
-Serialization_input_Channel
-::receive_std_vector
-(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress *theAddress){
-	iarchive(theVector);
-	return 0;
-}
 
 int 
 Serialization_input_Channel

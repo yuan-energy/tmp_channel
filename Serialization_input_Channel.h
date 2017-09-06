@@ -38,7 +38,19 @@ public:
 	Serialization_input_Channel(std::string const& filename);
 	~Serialization_input_Channel();
 	void close() final;
-	int receive_std_vector(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress* theAddress = 0)  final;
+
+	template <typename val_type>
+	int receive_single_POD(int dbTag, int commitTag, val_type& val, ChannelAddress* theAddress = 0 ){
+		iarchive(val);
+		return 0;
+	}
+
+	template <typename val_type>
+	int receive_std_vector(int dbTag, int commitTag, std::vector<val_type> & theVector, ChannelAddress* theAddress = 0){
+		iarchive(theVector);
+		return 0;
+	}
+
 	int receiveString(int dbTag, int commitTag,  std::string &theString, ChannelAddress* theAddress = 0) final;
 	int receiveDTensor1(int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress* theAddress = 0) final;
 	int receiveDTensor2(int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress* theAddress = 0) final;

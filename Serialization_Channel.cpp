@@ -37,23 +37,6 @@ Serialization_Channel
 {
 }
 
-int 
-Serialization_Channel
-::send_std_vector
-(int dbTag, int commitTag, const std::vector<int> & theVector, ChannelAddress *theAddress){
-	std::cerr<<"Serialization_Channel::::send_std_vector should not be called!\n";
-	std::cerr<<"subclass responsibility!\n";
-	return 0;
-}
-
-int 
-Serialization_Channel
-::receive_std_vector
-(int dbTag, int commitTag, std::vector<int> & theVector, ChannelAddress *theAddress){
-	std::cerr<<"Serialization_Channel::::receive_std_vector should not be called!\n";
-	std::cerr<<"subclass responsibility!\n";
-	return 0;
-}
 
 int 
 Serialization_Channel
@@ -61,7 +44,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const std::string &theString, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendString should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -70,7 +53,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  std::string &theString, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveString should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -79,7 +62,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const DTensor1 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendDTensor1 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -88,7 +71,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  DTensor1 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveDTensor1 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -97,7 +80,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const DTensor2 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendDTensor2 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -106,7 +89,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  DTensor2 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveDTensor2 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -115,7 +98,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const DTensor3 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendDTensor3 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -124,7 +107,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  DTensor3 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveDTensor3 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -133,7 +116,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const DTensor4 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendDTensor4 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -142,7 +125,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  DTensor4 &theTensor, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveDTensor4 should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -151,7 +134,7 @@ Serialization_Channel
 (int commitTag, MovableObject &theObj, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendObj should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -160,7 +143,7 @@ Serialization_Channel
 (int commitTag,  MovableObject &theObj, FEM_ObjectBroker &theBroker, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveObj should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -169,7 +152,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const Vector &theVector, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendVector should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -178,7 +161,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  Vector &theVector, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveVector should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -187,7 +170,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const ID &theID, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendID should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -196,7 +179,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  ID &theID, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveID should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -205,7 +188,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const Matrix &theMatrix, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendMatrix should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -214,7 +197,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  Matrix &theMatrix, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveMatrix should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -223,7 +206,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  const Message &theMessage, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::sendMsg should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int 
@@ -232,7 +215,7 @@ Serialization_Channel
 (int dbTag, int commitTag,  Message &theMessage, ChannelAddress *theAddress){
 	std::cerr<<"Serialization_Channel::::receiveMsg should not be called!\n";
 	std::cerr<<"subclass responsibility!\n";
-	return 0;
+	return -1;
 }
 
 int Serialization_Channel
