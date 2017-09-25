@@ -39,15 +39,14 @@
 
 // #include <OPS_Globals.h>
 #include <iostream>
-
-
-// Boris Jeremic 17Nov2008
-#include <iostream>
+#include <vector>
+#include <cstring>
+#include <stdlib.h>
 
 using namespace std;
 
 
-class ID
+class ID: public vector<int>
 {
 public:
     // constructors and destructor
@@ -55,14 +54,14 @@ public:
     ID(int);
     ID(int size, int arraySize, int fillValue = 0);
     ID(int *data, int size, bool cleanIt = false);
-    ID(const ID &);
-    ~ID();
+    // ID(const ID &);
+    // ~ID();
 
     // utility methods
     int Size(void) const;
     void Zero(void);
     int setData(int *newData, int size, bool cleanIt = false);
-    int resize(int newSize);
+    // int resize(int newSize);
     const int *getData() const;
 
 
@@ -71,8 +70,8 @@ public:
     inline int operator()(int x) const;
     int &operator[](int);
 
-    ID &operator=(const ID  &V);
-    bool operator==(const ID &rhs) const;
+    // ID &operator=(const ID  &V);
+    // bool operator==(const ID &rhs) const;
 
 
     int getLocation(int value) const;
@@ -84,7 +83,7 @@ public:
 
     // friend class UDP_Socket;
     // friend class TCP_Socket;
-    // friend class TCP_SocketNoDelay;
+    // // friend class TCP_SocketNoDelay;
     // friend class MPI_Channel;
     // friend class OutputWriter;
     // friend class H5OutputWriter;
@@ -92,64 +91,65 @@ public:
     // friend class MySqlDataRecorder;
     // friend class BerkeleyDbDatastore;
 
-    template<typename Archive>
-    void save(Archive& archive) const{
-        archive(sz);
-        archive(arraySize);
-        archive(fromFree);
-        for (int i = 0; i < arraySize; ++i){
-            archive(*(data+i));
-        }
-    }
-    template<typename Archive>
-    void load(Archive& archive) {
-        int read_sz;
-        archive(read_sz);
-        if(read_sz!=sz){
-            std::cerr<<"ERROR!!! During restart, the read ID size is different from the allocated ID size. \n";
-            std::cerr<<"ERROR!!! Please allocated the correct ID size before receiveVector. \n";
-            exit(-1);
-        }
+    // template<typename Archive>
+    // void save(Archive& archive) const{
+    //     archive(sz);
+    //     archive(arraySize);
+    //     archive(fromFree);
+    //     for (int i = 0; i < arraySize; ++i){
+    //         archive(*(data+i));
+    //     }
+    // }
+    // template<typename Archive>
+    // void load(Archive& archive) {
+    //     int read_sz;
+    //     archive(read_sz);
+    //     if(read_sz!=sz){
+    //         std::cerr<<"ERROR!!! During restart, the read ID size is different from the allocated ID size. \n";
+    //         std::cerr<<"ERROR!!! Please allocated the correct ID size before receiveVector. \n";
+    //         exit(-1);
+    //     }
 
-        archive(arraySize);
-        archive(fromFree);
+    //     archive(arraySize);
+    //     archive(fromFree);
         
-        for (int i = 0; i < arraySize; ++i){
-            archive(*(data+i));
-        }
-    }
+    //     for (int i = 0; i < arraySize; ++i){
+    //         archive(*(data+i));
+    //     }
+    // }
 
 private:
-    static int ID_NOT_VALID_ENTRY;
-    int sz;
-    int *data;
-    int arraySize;
-    int fromFree;
+    // int *data;
+    // static int ID_NOT_VALID_ENTRY;
+    // int sz;
+    // int arraySize;
+    // int fromFree;
 };
 
 
 inline int
 ID::Size(void) const
 {
-    return sz;
+    return this->size() ;
 }
 
 inline int &
 ID::operator()(int x)
 {
-#ifdef _G3DEBUG
-
+// #ifdef _G3DEBUG
+    // cout<<"x            = " << x <<endl;
+    // cout<<"this->size() = " << this->size() <<endl;
+    // cout<<"(*this)[x]   = " << (*this)[x] <<endl;
     // check if it is inside range [0,sz-1]
-    if (x < 0 || x >= sz)
+    if (x < 0 || x >= (int)(this->size()))
     {
-        std::cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endl;
-        return ID_NOT_VALID_ENTRY;
+        std::cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  this->size() - 1 << endl;
     }
 
-#endif
+// #endif
 
 
-    return data[x];
+    return *((this->begin()) + x) ;
 }
 
 inline int
@@ -157,20 +157,20 @@ ID::operator()(int x) const
 {
     //#ifdef _G3DEBUG
     // check if it is inside range [0,sz-1]
-    if (x < 0 || x >= sz)
+    if (x < 0 || x >= (int)(this->size()))
     {
-        cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  sz - 1 << endl;
-        return ID_NOT_VALID_ENTRY;
+        cerr << "ID::(loc) - loc " << x << " outside range 0 - " <<  this->size() - 1 << endl;
+        return 0;
     }
 
     //#endif
 
-    return data[x];
+    return *((this->cbegin()) + x) ;
 }
 
 inline const int *ID::getData() const
 {
-    return data;
+    return  &(*(this->cbegin())) ;
 }
 
 
